@@ -1,0 +1,40 @@
+pico-8 cartridge // http://www.pico-8.com
+version 18
+__lua__
+
+function _init()
+
+  dee = {}
+  dee.x = 15
+  dee.y = 80
+  dee.sprite = 1
+
+  spark = {}
+  spark.sprite = 5
+
+  stanley = {}
+  stanley.res = 0
+end
+
+function stan_talk()
+  if stanley.res = 0 then
+    print("hey, who the fuck are you?", 10, 10)
+
+function dee_talk()
+
+function dee_walk()
+
+
+
+
+
+function _update()
+  stan_talk()
+  dee_talk()
+  dee_walk()
+end
+
+
+function _draw()
+ cls()
+end

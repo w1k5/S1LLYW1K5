@@ -5,14 +5,10 @@ in_progress = 0
 start_end_game = 1
 game_over = 2
 
-left=0 right=1 up=2 down=3
-valid_moves = {left,right,up,down}
-
 function _init()
  player = {}
  player.x = flr(rnd(120))
  player.y = flr(rnd(114)+8)
- player.startsprite = 0
  player.endsprite = 1
  player.sprite = 0
  player.speed = 2
@@ -21,7 +17,6 @@ function _init()
  enemy = {}
  enemy.x = flr(rnd(120))
  enemy.y = flr(rnd(114)+8)
- enemy.startsprite = 4
  enemy.endsprite = 5
  enemy.sprite = 4
  enemy.speed = 1
@@ -29,13 +24,6 @@ function _init()
 
  state = in_progress
  score = 0
-end
-
-function move(unit)
- unit.sprite += 1
- if unit.sprite > unit.endsprite then
-  unit.sprite = unit.startsprite
- end
 end
 
 function draw_unit(unit) spr(unit.sprite, unit.x, unit.y) end
@@ -54,19 +42,13 @@ function move_unit(unit, direction)
    return 
   end
  end
- 
- if not unit.moving then
-  unit.sprite = unit.startsprite
- else
-  move(unit)
- end
 end
 
 function move_player()
   if (btn(0) and player.x > 0) player.x-=1
   if (btn(1) and player.x < 120) player.x+= 1
   if (btn(2) and player.y > 8) player.y -= 1
-  if (btn(3) and player.y < 120) player.y+= 1
+  if (btn(3) and player.y < 112) player.y+= 1
 end
 
 function move_enemy()
