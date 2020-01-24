@@ -54,10 +54,10 @@ end
 function dee_choose()
   if (btn(2)) then choose.y = 102 end
   if (btn(3)) then choose.y = 110 end
-  if (btn(5)) then
-    if (choose.y==112) then stanley.res+=1 end end
-  if (btn(5)) then
-    if (choose.y==120) then stanley.res+=2 end end
+  if (choose.y==112) then
+      if (btn(5)) then stanley.res+=1 end
+  if (choose.y==120) then
+      if (btn(5)) then stanley.res+=2 end
 end
 
 function _update()
@@ -74,6 +74,7 @@ function _draw()
  stan_talk()
  dee_talk()
  draw_choose()
+ print(stanley.res, 32, 32, 7)
 end
 __gfx__
 ddddddd0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
