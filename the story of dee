@@ -3,37 +3,49 @@ version 18
 __lua__
 
 function _init()
-
-  dee = {}
+  dee = {} --table for player
   dee.x = 15
   dee.y = 80
-  dee.sprite = 1
+  dee.sprite = 0
+  dee.blink1 = 1
+  dee.blink2 = 2
 
-  spark = {}
+  spark = {} --table for growth
   spark.sprite = 5
 
-  stanley = {}
+  stanley = {} --ai information
   stanley.res = 0
 end
 
+
+
 function stan_talk()
-  if stanley.res = 0 then
+  if (stanley.res==0) then
     print("hey, who the fuck are you?", 10, 10)
+end
 
 function dee_talk()
+  if (stanley.res==0) then
+    print("who cares?", 13, 112)
+    print("you tell me", 13, 120)
+end
 
 function dee_walk()
+  if (btn(0) and dee.x > 0) dee.x -=1
+  if (btn(1) and dee.x < 120) dee.x += 1
+end
 
-
-
-
+function dee_blink()
+  if(dee.step%3==0) dee.sprite+=1
+  if(dee.frame>5) dee.frame=0
+end
 
 function _update()
   stan_talk()
   dee_talk()
   dee_walk()
+  dee_blink()
 end
-
 
 function _draw()
  cls()
