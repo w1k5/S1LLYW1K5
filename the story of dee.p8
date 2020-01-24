@@ -32,8 +32,11 @@ end
 
 function stan_talk()
   if (stanley.res==0) then
-    print('hey, who the fuck are you?', 10, 10, 7)
-  end
+    print('hey, who the fuck are you?', 10, 10, 7) end
+  if (stanley.res==1) then
+  		print('i care. i asked for a reason.', 10, 10, 7) end
+  if (stanley.res==2) then
+  		print('a name is but a sound... maybe even just letters on a screen.', 10, 10, 7)	end
 end
 
 function dee_talk()
