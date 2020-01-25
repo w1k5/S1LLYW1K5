@@ -21,7 +21,10 @@ function _init()
   spark.sprite = 5
 
   stanley = {} --ai information
-		stanley.res=0
+	stanley.res = 1
+  stanley.dialogue = {'hey, who the fuck are you?', 'i care. i asked for a reason.'}
+  dee.dialogue = {'who cares?', 'fuck off.'}
+  dee.dialogue2 = {'you tell me...', 'how sweet.'}
 end
 
 function draw_unit(unit)
@@ -33,24 +36,14 @@ function draw_choose()
 end
 
 function stan_talk()
-  if (stanley.res==0) then
-    print('hey, who the fuck are you?', 10, 10, 7) end
-  if (stanley.res==1) then
-  		print('i care. i asked for a reason.', 10, 10, 7) end
-  if (stanley.res==2) then
-  		print('a name is but a sound... maybe even just letters on a screen.', 10, 10, 7)	end
+    print(stanley.dialogue[stanley.res], 10, 10, 7)
 end
 
 function dee_talk()
-  if (stanley.res==0) then
-    print('who cares?', 20, 102, 0)
-    print('you tell me...', 20, 110, 0) end
-  if (stanley.res==1) then
-    print('how sweet.', 20, 102, 0)
-    print('fuck off.', 20, 110, 0) end
-  if (stanley.res==2) then
-    print('hi love', 20, 102, 0) end
+    print(dee.dialogue[stanley.res], 20, 102, 0)
+    print(dee.dialogue2[stanley.res], 20, 110, 0)
 end
+
 function dee_walk()
   if (btn(0) and dee.x > 0) dee.x -= 1
 		if (btn(0)) dee.flip=true
@@ -64,8 +57,8 @@ function dee_choose()
 end
 
 function decide()
-  if ((btnp(5)) and (choose.y<113)) stanley.res+=1
- 	if ((btnp(5)) and (choose.y>119)) stanley.res+=2
+  if ((btnp(5)) and (choose.y==102)) stanley.res+=1
+ 	if ((btnp(5)) and (choose.y==110)) stanley.res+=2
 end
 
 function _update()
