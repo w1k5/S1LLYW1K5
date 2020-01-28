@@ -4,6 +4,7 @@ __lua__
 
 function _init()
   scene='menu'
+  t=0
 
   dee = {} --table for player
   dee.x = 15
@@ -32,9 +33,9 @@ function _init()
 
   stanley = {} --ai information
  	stanley.res = 1
-  stanley.dialogue = {'hey, who the fuck are you?', 'i care. i asked for a reason.', 'do you want to keep walking?', 'okay.', 'walk, in that case.', 'walk, in that case.'}
-  dee.dialogue = {'who cares?', 'fuck off.', 'yeah, i guess.', 'aaaaaaa', 'a door?', 'a door?'}
-  dee.dialogue2 = {'you tell me...', 'how sweet.', 'this isnt real, anyway.', '⬇️✽웃⬇️✽✽', 'press z to interact', 'press z to interact'}
+  stanley.dialogue = {'hey, who the fuck are you?', 'i care. i asked for a reason.', 'do you want to keep walking?', 'walk, in that case.', 'walk, in that case.', 'what do you think?', 'that hurts.', 'what did you expect? this is only life.'}
+  dee.dialogue = {'who cares?', 'fuck off.', 'yeah, i guess.', 'a door?', 'a door?', 'what a snore.', 'sorry.', 'i guess. now what?'}
+  dee.dialogue2 = {'you tell me...', 'how sweet.', 'this isnt real, anyway.', 'press z to interact', 'press z to interact', 'this is the same shit wtf..', 'i do not care.', 'i might just stop playing'}
 
   stars={}
   star_cols={1,13,6,7,1,13}
@@ -52,10 +53,9 @@ function _init()
       end
 
 --levels
---lvl.name(number, map coordinates)
 lvl = {}
-lvl.ice = {1, 0, 0, 0, 0}
-lvl.rep = {2, 17, 0, 0, 0}
+lvl.value = 1
+lvl.sx = {0, 17}
 
 end
 
@@ -64,7 +64,7 @@ function draw_unit(unit)
 end
 
 function draw_choose()
-if stanley.res!=5 and stanley.res!=6 then
+if stanley.res!=4 and stanley.res!=5 then
   print('>', 14, choose.y, 0)
 end
 end
@@ -77,6 +77,15 @@ function dee_talk()
     print(dee.dialogue[stanley.res], 20, 102, 0)
     print(dee.dialogue2[stanley.res], 20, 110, 0)
 end
+
+function new_level()
+  lvl.value+=1 end
+  cls()
+  for s in all(stars) do
+  pset(s.x,s.y,s.c)
+  end
+  map(lvl.sx[lvl.value], 0, 0, 0)
+  end
 
 function dee_walk()
   if (btn(0) and dee.x > 0) dee.x -= 1
@@ -120,17 +129,19 @@ function create_door()
  				if(door.step%3==0) door.sprite+=2
 			  if(door.sprite>29) door.sprite=28
     		if btnp(4) and door.sprite==28 then
-    			function new_level() end
-    	end
+          transition()
+        end
    	end
   end
 end
 
 function _update()
+  t+=0.1
   if scene=="menu" then
         update_menu()
     end
   dee_animate()
+  new_level()
   dee_choose()
   decide()
   stan_talk()
@@ -151,7 +162,7 @@ function _draw()
  for s in all(stars) do
  pset(s.x,s.y,s.c)
 	end
- map(0,0,0,0,16,16)
+ new_level()
  decide()
  stan_talk()
  dee_talk()
@@ -161,6 +172,7 @@ function _draw()
  create_door()
  draw_unit(dee)
  print(stanley.res, 32, 32, 7)
+ print(lvl.value, 40, 40, 7)
  if scene=="menu" then
       draw_menu()
  end
@@ -185,6 +197,21 @@ function draw_menu()
     print("press <- and ->", 33, 100, 13)
     print("at the same time to start", 16, 108, 13)
 end
+
+function transition()
+  cls()
+  rectfill(0,0,128,128,1)
+      for i=0,8 do
+        for j=0,8 do
+        local x = i*16
+        local osc1 = sin(t+i*0.1)
+        local osc2 = sin(t/4+j*0.03)
+        local y = j*16 + osc1*10
+        circfill(x, y, osc2*15, 13)
+        end
+      new_level() end
+end
+
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
