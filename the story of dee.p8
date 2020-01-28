@@ -79,7 +79,6 @@ function dee_talk()
 end
 
 function new_level()
-  lvl.value+=1 end
   cls()
   for s in all(stars) do
   pset(s.x,s.y,s.c)
@@ -129,14 +128,14 @@ function create_door()
  				if(door.step%3==0) door.sprite+=2
 			  if(door.sprite>29) door.sprite=28
     		if btnp(4) and door.sprite==28 then
-          transition()
-        end
-   	end
+         transition()
+         end
+         end
   end
 end
 
 function _update()
-  t+=0.1
+  t+=0.05
   if scene=="menu" then
         update_menu()
     end
@@ -209,10 +208,8 @@ function transition()
         local y = j*16 + osc1*10
         circfill(x, y, osc2*15, 13)
         end
-      new_level() end
+     end
 end
-
-
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
