@@ -4,7 +4,6 @@ __lua__
 
 function _init()
   scene='menu'
-  t=0
 
   dee = {} --table for player
   dee.x = 15
@@ -53,11 +52,20 @@ function _init()
       end
 
 --levels
+--lvl.name( map coordinates)
 lvl = {}
 lvl.value = 1
-lvl.sx = {0, 17}
+lvl.coordinates = {0, 0, 0, 0, 17, 0, 0, 0}
+lvl.celx = {0, 17}
+lvl.cely = {0, 0}
+lvl.sx = {0, 0}
+lvl.sy = {0, 0}
 
 end
+
+function new_level()
+  map(lvl.celx[lvl.value], lvl.cely[lvl.value], lvl.sx[lvl.value], lvl.sy[lvl.value])
+  end
 
 function draw_unit(unit)
   spr(unit.sprite, unit.x, unit.y, unit.w, unit.h, unit.flip)
@@ -77,14 +85,6 @@ function dee_talk()
     print(dee.dialogue[stanley.res], 20, 102, 0)
     print(dee.dialogue2[stanley.res], 20, 110, 0)
 end
-
-function new_level()
-  cls()
-  for s in all(stars) do
-  pset(s.x,s.y,s.c)
-  end
-  map(lvl.sx[lvl.value], 0, 0, 0)
-  end
 
 function dee_walk()
   if (btn(0) and dee.x > 0) dee.x -= 1
@@ -128,25 +128,27 @@ function create_door()
  				if(door.step%3==0) door.sprite+=2
 			  if(door.sprite>29) door.sprite=28
     		if btnp(4) and door.sprite==28 then
-         transition()
-         end
-         end
+          lvl.value+=0.5
+    			function new_level() end
+          dee.x=15
+          dee.y=64
+    	end
+   	end
   end
 end
 
 function _update()
-  t+=0.05
   if scene=="menu" then
         update_menu()
     end
   dee_animate()
-  new_level()
   dee_choose()
   decide()
   stan_talk()
   dee_talk()
   dee_walk()
   create_door()
+  new_level()
   for s in all(stars) do
    s.y+=s.z*warp_factor/10
    if s.y>128 then
@@ -161,7 +163,7 @@ function _draw()
  for s in all(stars) do
  pset(s.x,s.y,s.c)
 	end
- new_level()
+ map(lvl.coordinates[lvl.value])
  decide()
  stan_talk()
  dee_talk()
@@ -172,6 +174,7 @@ function _draw()
  draw_unit(dee)
  print(stanley.res, 32, 32, 7)
  print(lvl.value, 40, 40, 7)
+ grade_limits()
  if scene=="menu" then
       draw_menu()
  end
@@ -197,18 +200,10 @@ function draw_menu()
     print("at the same time to start", 16, 108, 13)
 end
 
-function transition()
-  cls()
-  rectfill(0,0,128,128,1)
-      for i=0,8 do
-        for j=0,8 do
-        local x = i*16
-        local osc1 = sin(t+i*0.1)
-        local osc2 = sin(t/4+j*0.03)
-        local y = j*16 + osc1*10
-        circfill(x, y, osc2*15, 13)
-        end
-     end
+function grade_limits()
+	if ((lvl.value==1) and (stanley.res > 5)) then
+		stanley.res=5 end
+	if lvl.value==2 then stanley.res>5 end
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
