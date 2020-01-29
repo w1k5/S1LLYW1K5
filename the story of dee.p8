@@ -121,7 +121,7 @@ function dee_animate()
 end
 
 function create_door()
-  if stanley.res==5 or stanley.res==6 then
+  if stanley.res==4 or stanley.res==5 then
   		 draw_unit(door) end
   if dee.y-door.y==0 then
     if btnp(4) then
@@ -149,6 +149,7 @@ function _update()
   dee_walk()
   create_door()
   new_level()
+  update_scores()
   for s in all(stars) do
    s.y+=s.z*warp_factor/10
    if s.y>128 then
@@ -174,7 +175,6 @@ function _draw()
  draw_unit(dee)
  print(stanley.res, 32, 32, 7)
  print(lvl.value, 40, 40, 7)
- grade_limits()
  if scene=="menu" then
       draw_menu()
  end
@@ -200,10 +200,15 @@ function draw_menu()
     print("at the same time to start", 16, 108, 13)
 end
 
-function grade_limits()
-	if ((lvl.value==1) and (stanley.res > 5)) then
-		stanley.res=5 end
-	if lvl.value==2 then stanley.res>5 end
+function update_scores()
+  if lvl.value==1 then
+    if stanley.res>5 then
+      stanley.res=5 end
+    end
+  if lvl.value==2 then
+  		if stanley.res<=5 then
+  				stanley.res=6  end
+  	 end
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
