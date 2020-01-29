@@ -63,7 +63,9 @@ lvl.sy = {0, 0}
 end
 
 function new_level()
-  map(lvl.celx[lvl.value], lvl.cely[lvl.value], 0, 0)
+  if lvl.value==1 then map(0, 0, 0, 0) end
+  if lvl.value==2 then cls() end
+  if lvl.value==2 then map(17, 0, 0, 0) end
   end
 
 function draw_unit(unit)
@@ -141,7 +143,7 @@ function _update()
         update_menu()
     end
   dee_animate()
-  map(lvl.celx[lvl.value], 0, 0, 0)
+		new_level()
   dee_choose()
   decide()
   stan_talk()
