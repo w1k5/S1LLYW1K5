@@ -32,9 +32,9 @@ function _init()
 
   stanley = {} --ai information
  	stanley.res = 1
-  stanley.dialogue = {'hey, who the fuck are you?', 'i care. i asked for a reason.', 'do you want to keep walking?', 'walk, in that case.', 'walk, in that case.', 'what do you think?', 'that hurts.', 'what did you expect? this is only life.'}
-  dee.dialogue = {'who cares?', 'fuck off.', 'yeah, i guess.', 'a door?', 'a door?', 'what a snore.', 'sorry.', 'i guess. now what?'}
-  dee.dialogue2 = {'you tell me...', 'how sweet.', 'this isnt real, anyway.', 'press z to interact', 'press z to interact', 'this is the same shit wtf..', 'i do not care.', 'i might just stop playing'}
+  stanley.dialogue = {'hey, who the fuck are you?', 'i care. i asked for a reason.', 'do you want to keep walking?', 'walk, in that case.', 'walk, in that case.', 'what do you think?', 'that hurts.', 'what did you expect?', 'i could make this the end.', 'this is my first dynamic code.', 'i appreciated your patience.', 'there\'s no game mechanic here.', 'at least i learned something.'}
+  dee.dialogue = {'who cares?', 'fuck off.', 'yeah, i guess.', 'a door?', 'a door?', 'what a snore.', 'sorry.', 'i guess. now what?', 'do it.', 'cool story, bro.', 'what do you mean?', 'was entertaining enough.', 'gg, bro, tell it again.'}
+  dee.dialogue2 = {'you tell me...', 'how sweet.', 'this isnt real, anyway.', 'press z to interact', 'press z to interact', 'it\'s the same, wtf.', 'i do not care.', 'might just stop playing.', 'i appreciate the effort.', 'impressive.', 'patience is a virtue.', 'happy winter study.', 'always nice to hear.'}
 
   stars={}
   star_cols={1,13,6,7,1,13}
@@ -50,23 +50,13 @@ function _init()
       add(stars,s)
         end
       end
-
---levels
---lvl.name( map coordinates)
 lvl = {}
 lvl.value = 1
-lvl.celx = {0, 17}
-lvl.cely = {0, 0}
-lvl.sx = {0, 0}
-lvl.sy = {0, 0}
-
 end
 
 function new_level()
-  if lvl.value==1 then map(0, 0, 0, 0) end
-  if lvl.value==2 then cls() end
   if lvl.value==2 then map(17, 0, 0, 0) end
-  end
+end
 
 function draw_unit(unit)
   spr(unit.sprite, unit.x, unit.y, unit.w, unit.h, unit.flip)
@@ -124,15 +114,17 @@ end
 function create_door()
   if stanley.res==4 or stanley.res==5 then
   		 draw_unit(door) end
+  if lvl.value==1 then
   if dee.y-door.y==0 then
     if btnp(4) then
  				if(door.step%3==0) door.sprite+=2
 			  if(door.sprite>29) door.sprite=28
     		if btnp(4) and door.sprite==28 then
-          lvl.value+=0.5
+          lvl.value+=1
     			function new_level() end
           dee.x=15
           dee.y=64
+      end
     	end
    	end
   end
@@ -151,6 +143,8 @@ function _update()
   dee_walk()
   create_door()
   update_scores()
+  end_game()
+  new_level()
   for s in all(stars) do
    s.y+=s.z*warp_factor/10
    if s.y>128 then
@@ -165,8 +159,8 @@ function _draw()
  for s in all(stars) do
  pset(s.x,s.y,s.c)
 	end
- new_level()
  decide()
+ map(0,0,0,0)
  stan_talk()
  dee_talk()
  dee_animate()
@@ -174,11 +168,9 @@ function _draw()
  draw_choose()
  create_door()
  draw_unit(dee)
- print(stanley.res, 32, 32, 7)
- print(lvl.value, 40, 40, 7)
+ end_game()
  if scene=="menu" then
-      draw_menu()
- end
+      draw_menu() end
 end
 
 function update_menu()
@@ -210,6 +202,22 @@ function update_scores()
   		if stanley.res<=5 then
   				stanley.res=6  end
   	 end
+end
+
+function end_game()
+ if stanley.res>=14 then
+    cls()
+    for s in all(stars) do
+       pset(s.x,s.y,s.c)
+        end
+        print("this was", 25, 14, 13)
+        spr(192, 40, 26, 7, 2)
+        spr(199, 49, 38, 5, 2)
+    print("the end.", 33, 60, 13)
+    print("i just wasted about a minute", 8, 82, 13)
+    print("of your life.", 24, 91, 13)
+    print("you\'re welcome.", 32, 101, 13)
+end
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
