@@ -55,7 +55,6 @@ function _init()
 --lvl.name( map coordinates)
 lvl = {}
 lvl.value = 1
-lvl.coordinates = {0, 0, 0, 0, 17, 0, 0, 0}
 lvl.celx = {0, 17}
 lvl.cely = {0, 0}
 lvl.sx = {0, 0}
@@ -64,7 +63,7 @@ lvl.sy = {0, 0}
 end
 
 function new_level()
-  map(lvl.celx[lvl.value], lvl.cely[lvl.value], lvl.sx[lvl.value], lvl.sy[lvl.value])
+  map(lvl.celx[lvl.value], lvl.cely[lvl.value], 0, 0)
   end
 
 function draw_unit(unit)
@@ -142,13 +141,13 @@ function _update()
         update_menu()
     end
   dee_animate()
+  map(lvl.celx[lvl.value], 0, 0, 0)
   dee_choose()
   decide()
   stan_talk()
   dee_talk()
   dee_walk()
   create_door()
-  new_level()
   update_scores()
   for s in all(stars) do
    s.y+=s.z*warp_factor/10
@@ -164,7 +163,7 @@ function _draw()
  for s in all(stars) do
  pset(s.x,s.y,s.c)
 	end
- map(lvl.coordinates[lvl.value])
+ new_level()
  decide()
  stan_talk()
  dee_talk()
